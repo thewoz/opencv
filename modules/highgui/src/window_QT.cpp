@@ -2997,6 +2997,9 @@ void DefaultViewPort::wheelEvent(QWheelEvent* evnt)
     icvmouseEvent((QMouseEvent *)evnt, mouse_wheel);
 
     scaleView(wheelEventDelta(evnt) / 240.0, wheelEventPos(evnt));
+  
+    controlImagePosition();
+
     viewport()->update();
 
     QWidget::wheelEvent(evnt);
@@ -3011,6 +3014,9 @@ void DefaultViewPort::mousePressEvent(QMouseEvent* evnt)
     {
         setCursor(Qt::ClosedHandCursor);
         positionGrabbing = evnt->pos();
+        int x, y;
+        param_matrixWorld.map(positionGrabbing.x(), positionGrabbing.y(),&x,&y);
+        matrixWorld_inv.map(positionGrabbing.x(), positionGrabbing.y(),&x,&y);
     }
 
     QWidget::mousePressEvent(evnt);
